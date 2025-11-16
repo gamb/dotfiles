@@ -18,6 +18,28 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    (pkgs.aspellWithDicts (dicts: with dicts; [ en ]))
+    pkgs.bun
+    pkgs.coreutils-prefixed
+    pkgs.direnv
+    pkgs.entr
+    pkgs.fd
+    pkgs.fish
+    pkgs.git
+    pkgs.git
+    pkgs.jq
+    pkgs.just
+    pkgs.ledger
+    pkgs.nix-direnv
+    pkgs.nixfmt-rfc-style
+    pkgs.nodePackages.prettier
+    pkgs.ripgrep
+    pkgs.sqlite
+    pkgs.texlive.combined.scheme-basic
+    pkgs.tree
+    pkgs.uiua
+    pkgs.unzip
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
