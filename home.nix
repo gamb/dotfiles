@@ -21,14 +21,12 @@
     (pkgs.aspellWithDicts (dicts: with dicts; [ en ]))
     pkgs.bun
     pkgs.coreutils-prefixed
-    pkgs.direnv
     pkgs.entr
     pkgs.fd
     pkgs.fish
     pkgs.jq
     pkgs.just
     pkgs.ledger
-    pkgs.nix-direnv
     pkgs.nixfmt-rfc-style
     pkgs.nodePackages.prettier
     pkgs.ripgrep
@@ -70,6 +68,11 @@
     enable = true;
     package = import ./emacs.nix { inherit pkgs; };
     extraConfig = builtins.readFile ./init.el;
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
