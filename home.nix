@@ -25,8 +25,6 @@
     pkgs.entr
     pkgs.fd
     pkgs.fish
-    pkgs.git
-    pkgs.git
     pkgs.jq
     pkgs.just
     pkgs.ledger
@@ -60,6 +58,12 @@
 
   programs.fish = {
     enable = true;
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "Adam Gamble";
+    userEmail = "adam.gamble@hey.com";
   };
 
   programs.emacs = {
