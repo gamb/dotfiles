@@ -111,8 +111,8 @@
 (use-package embark-consult)
 
 (use-package project
-  :custom
-  ;(project-vc-extra-root-markers '("deps.edn" "package.json"))
+  ;; :custom
+  ;; (project-vc-extra-root-markers '("deps.edn" "package.json"))
   )
 
 (use-package ibuffer-project
