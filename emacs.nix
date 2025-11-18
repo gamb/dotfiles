@@ -38,6 +38,7 @@
     magit
     marginalia
     markdown-mode
+    minions
     modus-themes
     move-dup
     nix-ts-mode

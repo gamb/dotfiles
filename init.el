@@ -506,6 +506,10 @@ first occurance (not ARGth occurance)."
   (:map prog-mode-map
         ("C-." . mark-sexp)))
 
+(use-package minions
+  :config
+  (minions-mode))
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (custom-set-variables
