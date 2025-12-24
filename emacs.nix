@@ -1,6 +1,6 @@
 { pkgs }:
 
-(pkgs.emacsPackagesFor pkgs.emacsNativeComp).emacsWithPackages (
+(pkgs.emacsPackagesFor pkgs.emacs).emacsWithPackages (
   epkgs: with epkgs; [
     browse-at-remote
     browse-kill-ring
