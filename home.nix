@@ -107,7 +107,7 @@
   #  /etc/profiles/per-user/adamgamble/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "emacs";
   };
 
   # Let Home Manager install and manage itself.
