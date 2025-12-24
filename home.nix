@@ -62,6 +62,10 @@
     enable = true;
     userName = "Adam Gamble";
     userEmail = "adam.gamble@hey.com";
+    ignores = [".direnv/"];
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
   };
 
   programs.emacs = {
