@@ -15,12 +15,15 @@
   (ring-bell-function 'ignore)
   (ns-alternate-modifier 'none)
   (ns-command-modifier 'meta)
-  (line-spacing 2)
+  (line-spacing 3)
   (cursor-type 'bar)
   :bind
   ("M-`" . ns-next-frame)
   :custom-face
-  (default ((t (:height 140 :family "Paper Mono")))))
+  (mode-line ((t (:weight light :background "grey90" :box nil))))
+  (mode-line-inactive ((t (:weight light :background "grey95" :box nil))))
+  (default ((t (:height 150 :family "Paper Mono"))))
+  (fringe ((t (:background nil)))))
 
 (use-package minibuffer
   :custom
