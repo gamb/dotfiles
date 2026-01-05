@@ -493,14 +493,24 @@ first occurance (not ARGth occurance)."
   :config
   (fullframe org-agenda org-agenda-quit)
   :bind
-  (("M-m" . (lambda ()
-              (interactive)
-              (org-agenda nil "t")))
-   ("C-c a" . org-agenda)))
+  (("C-c a" . org-agenda)))
 
 (use-package org-habit
   :custom
   (org-habit-show-habits t))
+
+(use-package org-roam
+  :bind
+  ("M-m" . org-roam-node-find)
+  :config
+
+    (setq org-roam-capture-templates
+        '(("d" "default" entry
+           "* ${title}\n:PROPERTIES:\n:ID: %(org-id-new)\n:END:\n%?"
+           :target (file "~/Documents/Pitch/todo.org")
+           :unnarrowed t)))
+    
+  (setq org-roam-directory (expand-file-name "~/Documents/Pitch")))
 
 (use-package prog-mode
   :hook
