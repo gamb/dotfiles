@@ -45,6 +45,7 @@
     nim-mode
     ocaml-ts-mode
     orderless
+    org-roam
     paredit
     reformatter
     rg
