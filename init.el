@@ -485,6 +485,8 @@ first occurance (not ARGth occurance)."
   ("M-z" . zap-to-char-basic))
 
 (use-package org
+  :hook
+  (org-mode . visual-line-mode)
   :bind
   ((:map org-mode-map
 	 ("C-k" . org-archive-subtree))))
