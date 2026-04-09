@@ -248,26 +248,23 @@
 (use-package magit
   :demand t
   :after fullframe
-  :bind
-  ((:map magit-diff-section-map
-	 ("<remap> <magit-visit-thing>" . magit-diff-visit-file-dwim)))
+  ;; :bind
+  ;; ((:map magit-diff-section-map
+  ;;        ("<remap> <magit-visit-thing>" . magit-diff-visit-file-dwim)))
   :config
   (fullframe magit-status magit-mode-quit-window)
   (fullframe magit-project-status magit-mode-quit-window)
 
-  (defun magit-diff-visit-file-dwim (file &optional goto-worktree)
-    (interactive (list (magit-diff--file-at-point t t)
-		       (not current-prefix-arg)))
-    (if (eq major-mode 'magit-diff-mode)
-	;; Generally from a diff view I want to jump straight to a
-	;; file in the worktree rather than view a read-only buffer of
-	;; the commit-state.
-	(magit-diff-visit-file--internal file goto-worktree #'switch-to-buffer-other-window)
-      (magit-diff-visit-file file)))
-
-  (defun magit-diff-upstream ()
-    (interactive)
-    (magit-diff-range "@{upstream}...")))
+  ;; (defun magit-diff-visit-file-dwim (file &optional goto-worktree)
+  ;;   (interactive (list (magit-diff--file-at-point t t)
+  ;;       	       (not current-prefix-arg)))
+  ;;   (if (eq major-mode 'magit-diff-mode)
+  ;;       ;; Generally from a diff view I want to jump straight to a
+  ;;       ;; file in the worktree rather than view a read-only buffer of
+  ;;       ;; the commit-state.
+  ;;       (magit-diff-visit-file--internal file goto-worktree #'switch-to-buffer-other-window)
+  ;;     (magit-diff-visit-file file)))
+  )
 
 (use-package fullframe)
 
@@ -417,6 +414,7 @@
   (corfu-popupinfo-mode t)
   :bind
   (:map corfu-map
+        ("<TAB>")
 	("C-<return>" . corfu-quit)
 	([escape] . corfu-quit)
 	("M-." . corfu-move-to-minibuffer)
@@ -492,6 +490,9 @@ first occurance (not ARGth occurance)."
 	 ("C-k" . org-archive-subtree))))
 
 (use-package org-agenda
+  ;; NB. since completion doesn't work within :custom macro, try using tempel templates
+  :custom
+  (org-agenda-files '("~/Documents/Pitch"))
   :config
   (fullframe org-agenda org-agenda-quit)
   :bind
