@@ -5,4 +5,4 @@ build:
   home-manager build
 
 switch:
-  home-manager switch
+  home-manager switch -b backup
