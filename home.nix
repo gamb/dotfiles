@@ -61,10 +61,12 @@
 
   programs.git = {
     enable = true;
-    userName = "Adam Gamble";
-    userEmail = "adam.gamble@hey.com";
     ignores = [".direnv/"];
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Adam Gamble";
+        email = "adam.gamble@hey.com";
+      };
       init.defaultBranch = "main";
     };
   };
