@@ -5,6 +5,8 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 
+(defconst *is-a-mac* (eq system-type 'darwin))
+
 ;; Ensure use-package is installed
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -17,13 +19,24 @@
   (ns-command-modifier 'meta)
   (line-spacing 3)
   (cursor-type 'bar)
+  (scroll-bar-mode nil)
+  :config
+  (when *is-a-mac*
+    ;; Due to eldoc/ emoji line-height issues, thanks https://www.reddit.com/r/emacs/comments/1lbo5jy/comment/noely1y/
+    (set-fontset-font "fontset-default" 'emoji "Noto Color Emoji"))
   :bind
   ("M-`" . ns-next-frame)
   :custom-face
   (mode-line ((t (:weight light :background "grey90" :box nil))))
   (mode-line-inactive ((t (:weight light :background "grey95" :box nil))))
-  (default ((t (:height 150 :family "Paper Mono"))))
+  (default ((t (:height 150 :weight demilight :family "Lilex"))))
   (fringe ((t (:background nil)))))
+
+(use-package ns-auto-titlebar
+  :demand t
+  :config
+  (when *is-a-mac*
+    (ns-auto-titlebar-mode)))
 
 (use-package minibuffer
   :custom
@@ -114,9 +127,10 @@
 (use-package embark-consult)
 
 (use-package project
-  ;; :custom
-  ;; (project-vc-extra-root-markers '("deps.edn" "package.json"))
-  )
+  :custom
+  (project-switch-commands 'magit-project-status)
+  :bind
+  (("M-P" . project-find-file)))
 
 (use-package ibuffer-project
   :demand t
@@ -353,17 +367,28 @@
   :type 'string
   :group 'prettier)
 
-(use-package typescript-ts-mode
-  :demand t
-  :config
-  ;; TODO: capf snippets esp. to enable quick entry of jsx tags ??
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-  (reformatter-define prettier-ts
-    :program prettier-executable
-    :args '("--parser" "typescript"))
-  :hook
-  (typescript-ts-base-mode . prettier-ts-on-save-mode))
+(use-package jtsx
+  ;; NB. try using repeat-modes for modal-like editing with jsx
+  :ensure t
+  :mode (("\\.jsx?\\'" . jtsx-jsx-mode)
+         ("\\.tsx\\'" . jtsx-tsx-mode)
+         ("\\.ts\\'" . jtsx-typescript-mode))
+  :commands jtsx-install-treesit-language
+  :hook ((jtsx-jsx-mode . hs-minor-mode)
+         (jtsx-tsx-mode . hs-minor-mode)
+         (jtsx-typescript-mode . hs-minor-mode)))
+
+;; (use-package typescript-ts-mode
+;;   :demand t
+;;   :config
+;;   ;; TODO: capf snippets esp. to enable quick entry of jsx tags ??
+;;   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+;;   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+;;   (reformatter-define prettier-ts
+;;     :program prettier-executable
+;;     :args '("--parser" "typescript"))
+;;   :hook
+;;   (typescript-ts-base-mode . prettier-ts-on-save-mode))
 
 (use-package css-mode
   :hook
@@ -460,6 +485,12 @@
   ("C-c C-r" . symbol-overlay-rename))
 
 (use-package hippie-exp
+  :config
+  (defun try-complete-at-point (_old)
+    ;; I want M-/ to run complete at point if there is no hippie
+    ;; expansion. Useful on a blank line, before auto corfu has kicked
+    ;; in to tell me about available properties.
+    (completion-at-point))
   :bind
   (("M-/" . hippie-expand))
   :custom
@@ -468,7 +499,8 @@
      try-complete-file-name
      try-expand-dabbrev
      try-expand-dabbrev-all-buffers
-     try-expand-dabbrev-from-kill)))
+     try-expand-dabbrev-from-kill
+     try-complete-at-point)))
 
 (use-package simple
   :config
@@ -512,7 +544,7 @@ first occurance (not ARGth occurance)."
            "* ${title}\n:PROPERTIES:\n:ID: %(org-id-new)\n:END:\n%?"
            :target (file "~/Documents/Pitch/todo.org")
            :unnarrowed t)))
-    
+
   (setq org-roam-directory (expand-file-name "~/Documents/Pitch")))
 
 (use-package prog-mode
