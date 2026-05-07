@@ -23,18 +23,42 @@
         embark-consult
         envrc
         exec-path-from-shell
+        flymake
+        focus
         fullframe
+        gptel
+        hide-mode-line
+        highlight-symbol
+        ibuffer-project
         j-mode
+        justl
+        ledger-mode
         magit
         marginalia
+        markdown-mode
+        minions
+        modus-themes
         move-dup
+        nim-mode
+        nix-ts-mode
         ns-auto-titlebar
+        ocaml-ts-mode
         orderless
+        org-roam
         paredit
+        reformatter
+        rg
+        slime
+        symbol-overlay
         tempel
         tuareg
+        uiua-mode
+        use-package
         vertico
+        vterm
+        which-key
         whole-line-or-region
+        xref
         (treesit-grammars.with-grammars (
           treesit-pkgs: with treesit-pkgs; [
             tree-sitter-typescript
@@ -43,6 +67,7 @@
             tree-sitter-nix
             tree-sitter-tsx
             tree-sitter-json
+            tree-sitter-javascript
           ]
         ))
       ]
