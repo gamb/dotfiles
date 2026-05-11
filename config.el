@@ -262,23 +262,12 @@
 (use-package magit
   :demand t
   :after fullframe
-  ;; :bind
-  ;; ((:map magit-diff-section-map
-  ;;        ("<remap> <magit-visit-thing>" . magit-diff-visit-file-dwim)))
+  :bind
+  ((:map magit-blob-mode-map
+         ("<return>" . magit-blob-visit-file)))
   :config
   (fullframe magit-status magit-mode-quit-window)
-  (fullframe magit-project-status magit-mode-quit-window)
-
-  ;; (defun magit-diff-visit-file-dwim (file &optional goto-worktree)
-  ;;   (interactive (list (magit-diff--file-at-point t t)
-  ;;       	       (not current-prefix-arg)))
-  ;;   (if (eq major-mode 'magit-diff-mode)
-  ;;       ;; Generally from a diff view I want to jump straight to a
-  ;;       ;; file in the worktree rather than view a read-only buffer of
-  ;;       ;; the commit-state.
-  ;;       (magit-diff-visit-file--internal file goto-worktree #'switch-to-buffer-other-window)
-  ;;     (magit-diff-visit-file file)))
-  )
+  (fullframe magit-project-status magit-mode-quit-window))
 
 (use-package fullframe)
 
