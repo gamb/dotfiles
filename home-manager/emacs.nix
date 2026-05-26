@@ -16,6 +16,7 @@
           };
           packageRequires = with epkgs; [ eglot ];
         })
+        browse-kill-ring
         cape
         clojure-mode
         consult
@@ -31,6 +32,7 @@
         highlight-symbol
         ibuffer-project
         j-mode
+        jarchive
         justl
         ledger-mode
         magit
