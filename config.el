@@ -207,6 +207,11 @@
   ;; Maybe not needed after 1.19 https://github.com/joaotavora/eglot/issues/614
   )
 
+(use-package jarchive
+  ;; Needed for Eglot https://github.com/joaotavora/eglot/issues/661#issuecomment-1362204524
+  :config
+  (jarchive-setup))
+
 (use-package flymake
   ;; TODO: flymake-eslint ?? https://www.rahuljuliato.com/posts/eslint-on-emacs
   :config
