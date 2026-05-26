@@ -128,6 +128,7 @@
 
 (use-package project
   :custom
+  (project-vc-extra-root-markers '("package.json" "deps.edn"))
   (project-switch-commands 'magit-project-status)
   :bind
   (("M-P" . project-find-file)))
