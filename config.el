@@ -11,6 +11,13 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+(use-package exec-path-from-shell
+  :demand t
+  :config
+  (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
+
 (use-package emacs
   :custom
   (tool-bar-mode nil)
@@ -396,12 +403,6 @@
 (use-package justl
   :bind
   ("C-x j" . justl-exec-recipe-in-dir))
-
-(use-package exec-path-from-shell
-  :config
-  (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
-    (add-to-list 'exec-path-from-shell-variables var))
-  (exec-path-from-shell-initialize))
 
 (use-package envrc
   :config
