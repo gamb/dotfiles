@@ -12,6 +12,8 @@
 
   home.stateVersion = "25.05"; # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
 
+  home.file.".claude/CLAUDE.md".source = ../CLAUDE.md;
+
   home.packages = [
     (pkgs.aspellWithDicts (dicts: with dicts; [ en ]))
     pkgs.bun
