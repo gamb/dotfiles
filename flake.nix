@@ -32,6 +32,13 @@
       };
     in
     {
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          pkgs.just
+          home-manager.packages.${system}.home-manager
+        ];
+      };
+
       homeConfigurations."macbook" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
