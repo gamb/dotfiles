@@ -21,6 +21,7 @@
     pkgs.entr
     pkgs.fd
     pkgs.fish
+    pkgs.gh
     pkgs.git-absorb
     pkgs.jq
     pkgs.just
