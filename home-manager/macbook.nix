@@ -45,6 +45,9 @@
           source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
       end
     '';
+    functions.fish_prompt = ''
+      echo -n "% "
+    '';
   };
 
   programs.git = {
