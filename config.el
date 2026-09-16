@@ -39,7 +39,27 @@
   :config
   (when *is-a-mac*
     ;; Due to eldoc/ emoji line-height issues, thanks https://www.reddit.com/r/emacs/comments/1lbo5jy/comment/noely1y/
-    (set-fontset-font "fontset-default" 'emoji "Noto Color Emoji"))
+    (set-fontset-font "fontset-default" 'emoji "Noto Color Emoji")
+    (add-to-list 'default-frame-alist '(alpha . 96))
+    (dolist (frame (frame-list))
+      (set-frame-parameter frame 'alpha 96)))
+
+  (defcustom font-size-toggle-heights '(150 . 170)
+    "The two `default' face heights that `font-size-toggle' alternates between."
+    :type '(cons integer integer)
+    :group 'faces)
+
+  ;; FUTURE: support multi-step font sizes and use repeat-mode to cycle values
+  (defun font-size-toggle ()
+    "Alternate the `default' face height between `font-size-toggle-heights'.
+
+     Any other height goes to the first of the two."
+    (interactive)
+    (pcase-let ((`(,small . ,large) font-size-toggle-heights))
+      (set-face-attribute 'default nil
+                          :height (if (equal (face-attribute 'default :height) small)
+                                      large
+                                    small))))
   :bind
   ("M-`" . ns-next-frame)
   :custom-face
