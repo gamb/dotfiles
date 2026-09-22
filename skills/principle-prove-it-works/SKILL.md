@@ -30,3 +30,9 @@ When verifying delegated work, inspect the actual output artifact (git diff, fil
 The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
 
 Keep the artifact visible for the human. Commit it only for large or complex work where the trail has to be auditable later, like a big port or migration (the **show-me-your-work** skill).
+
+## Use agent-browser for web
+
+Always use agent-browser to validate frontend facing changes, run through the real world workflow in a Chrome and validate that the fix works for real.
+
+If authentication is a blocker as for help rather than seek a workaround
