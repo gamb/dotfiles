@@ -13,6 +13,7 @@ Place validation, type narrowing, and error handling at system boundaries. Trust
 - **At boundaries** (CLI args, config files, external APIs, network protocols): validate, return errors, handle defensively.
 - **Inside the system:** typed data, error propagation, no re-validation. Trust the types.
 - **Across the boundary.** Expose domain concepts, not the boundary's private representation. Keep general-purpose mechanism inside and special-purpose policy at the edge.
+- **Parse, don't validate.** A validator checks a fact and returns `void` or `boolean`, so the proof is lost and downstream code checks again or trusts blindly. A parser checks the same fact and returns the narrowed type, so downstream code takes the type as the proof. Checks interleaved with processing leave a window where half-processed invalid data has already mutated state. Parse first, then process. (Alexis King, "Parse, don't validate", 2019: https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/)
 
 **Applications:**
 
@@ -31,3 +32,4 @@ Code organization:
 **The tests:**
 - "Is this data crossing a system boundary right now?" If not, validation is redundant.
 - "Can this be a pure function that the shell just calls?" If yes, extract it.
+- "What does this check return?" `void` or `boolean`, and its job is to reject bad input, means make it return the narrowed type. A `void` function that performs an effect is fine.
