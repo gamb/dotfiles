@@ -7,7 +7,6 @@
 
 (defconst *is-a-mac* (eq system-type 'darwin))
 
-;; Ensure use-package is installed
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
