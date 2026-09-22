@@ -10,14 +10,10 @@
     };
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    mattpocock-skills = {
-      url = "github:mattpocock/skills";
-      flake = false;
-    };
   };
 
   outputs =
-    { nixpkgs, home-manager, emacs-overlay, llm-agents, mattpocock-skills, ... }:
+    { nixpkgs, home-manager, emacs-overlay, llm-agents, ... }:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
@@ -46,8 +42,6 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [ ./home-manager/macbook.nix ];
-
-        extraSpecialArgs = { inherit mattpocock-skills; };
       };
     };
 }
