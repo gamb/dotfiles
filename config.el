@@ -39,9 +39,10 @@
   (when *is-a-mac*
     ;; Due to eldoc/ emoji line-height issues, thanks https://www.reddit.com/r/emacs/comments/1lbo5jy/comment/noely1y/
     (set-fontset-font "fontset-default" 'emoji "Noto Color Emoji")
-    (add-to-list 'default-frame-alist '(alpha . 96))
-    (dolist (frame (frame-list))
-      (set-frame-parameter frame 'alpha 96)))
+    ;; (add-to-list 'default-frame-alist '(alpha . 96))
+    ;; (dolist (frame (frame-list))
+    ;;   (set-frame-parameter frame 'alpha 96))
+    )
 
   (defcustom font-size-toggle-heights '(150 . 170)
     "The two `default' face heights that `font-size-toggle' alternates between."
