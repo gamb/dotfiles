@@ -68,6 +68,15 @@
   (default ((t (:height 150 :family "Lilex"))))
   (fringe ((t (:background nil)))))
 
+(use-package ef-themes
+  :demand t
+  :custom
+  (modus-themes-to-toggle '(ef-arbutus ef-autumn))
+  :bind
+  ("C-c t" . ef-themes-toggle)
+  :config
+  (load-theme 'ef-arbutus t))
+
 (use-package ns-auto-titlebar
   :demand t
   :config

@@ -40,6 +40,7 @@ in
         clojure-mode
         consult
         corfu
+        ef-themes
         embark-consult
         envrc
         exec-path-from-shell
