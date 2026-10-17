@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   noShortcuts = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
@@ -15,11 +15,27 @@ in
   home.stateVersion = "26.05";
 
   home.packages = [
+    (pkgs.aspellWithDicts (dicts: with dicts; [ en ]))
+    pkgs.fzf
+    pkgs.jq
     pkgs.llm-agents.codex
     pkgs.llm-agents.codex-acp
+    pkgs.ripgrep
+    pkgs.tree
+    pkgs.sqlite
   ];
 
-  # Release Super and its combinations used as Meta shortcuts in Emacs.
+  programs.vicinae = {
+    enable = true;
+    systemd.enable = true;
+  };
+
+  programs.gnome-shell = {
+    enable = true;
+    extensions = [ { package = pkgs.gnomeExtensions.vicinae; } ];
+  };
+
+  # Release Super shortcuts used as Meta in Emacs, except the launcher binding.
   dconf.settings = {
     "org/gnome/mutter".overlay-key = "";
     "org/gnome/shell/keybindings" = {
@@ -30,10 +46,21 @@ in
     "desktop/ibus/panel/emoji".hotkey = noShortcuts;
     "org/gnome/settings-daemon/plugins/media-keys" = {
       rotate-video-lock-static = [ "XF86RotationLockToggle" ];
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae/"
+      ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vicinae" = {
+      name = "Toggle Vicinae";
+      command = "${lib.getExe config.programs.vicinae.package} toggle";
+      # GNOME sees this modifier after keyd's left Ctrl/Super swap.
+      binding = "<Super>space";
     };
     "org/gnome/desktop/wm/keybindings" = {
       switch-group = [ "<Alt>Above_Tab" ];
       switch-group-backward = [ "<Shift><Alt>Above_Tab" ];
+      switch-input-source = noShortcuts;
+      switch-input-source-backward = noShortcuts;
     };
   };
 
