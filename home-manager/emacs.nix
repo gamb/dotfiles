@@ -54,6 +54,27 @@ in
         exec-path-from-shell
         flymake
         focus
+        # nixpkgs 26.05 ships ghostel 0-unstable-2026-05-06, whose zig module
+        # build fails on Darwin with DarwinSdkNotFound: ghostty's build.zig
+        # runs `xcrun --show-sdk-path`, which does not exist in the sandbox.
+        # nixpkgs fixed this in 5370753 (June 2026) by adding xcbuild, which
+        # provides an xcrun shim. Backport that until the package catches up.
+        (
+          let
+            module = ghostel.passthru.module.overrideAttrs (old: {
+              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ lib.optionals isDarwin [ pkgs.xcbuild ];
+            });
+            libExt = pkgs.stdenv.hostPlatform.extensions.sharedLibrary;
+          in
+          ghostel.overrideAttrs (old: {
+            preBuild = ''
+              install ${module}/lib/libghostel-module${libExt} ghostel-module${libExt}
+            '';
+            passthru = old.passthru // {
+              inherit module;
+            };
+          })
+        )
         gptel
         hide-mode-line
         highlight-symbol

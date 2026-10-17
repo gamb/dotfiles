@@ -306,6 +306,9 @@
   :bind
   ("M-o" . consult-buffer-other-window))
 
+(use-package ghostel
+  :commands ghostel)
+
 (use-package agent-shell
   :custom
   (agent-shell-anthropic-authentication
