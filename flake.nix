@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of adamgamble";
+  description = "NixOS and Home Manager configurations of adamgamble";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
@@ -33,6 +33,14 @@
       };
     in
     {
+      nixosConfigurations.seria = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./machines/seria/configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
+      };
+
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           pkgs.just
