@@ -52,11 +52,6 @@
     ;;   (set-frame-parameter frame 'alpha 96))
     )
 
-  (defcustom font-size-toggle-heights '(150 . 170)
-    "The two `default' face heights that `font-size-toggle' alternates between."
-    :type '(cons integer integer)
-    :group 'faces)
-
   ;; FUTURE: support multi-step font sizes and use repeat-mode to cycle values
   (defun font-size-toggle ()
     "Alternate the `default' face height between `font-size-toggle-heights'.
@@ -71,7 +66,7 @@
   :custom-face
   (mode-line ((t (:weight light :background "grey90" :box nil))))
   (mode-line-inactive ((t (:weight light :background "grey95" :box nil))))
-  (default ((t (:height 150 :family "Lilex"))))
+  (default ((t (:family "Lilex"))))
   (fringe ((t (:background nil)))))
 
 (use-package ef-themes
@@ -616,11 +611,12 @@ first occurance (not ARGth occurance)."
   :config
   (minions-mode))
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
 (custom-set-variables
  '(use-package-enable-imenu-support t)
  '(use-short-answers t))
+
+(setq custom-file (expand-file-name "~/.emacs"))
+(load custom-file 'noerror 'nomessage)
 
 ;; Local Variables:
 ;; coding: utf-8
