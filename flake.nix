@@ -38,6 +38,7 @@
         modules = [
           ./machines/seria/configuration.nix
           home-manager.nixosModules.home-manager
+          { nixpkgs.overlays = [ emacs-overlay.overlays.default ]; }
         ];
       };
 

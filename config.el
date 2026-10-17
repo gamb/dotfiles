@@ -30,13 +30,15 @@
   :custom
   (tool-bar-mode nil)
   (ring-bell-function 'ignore)
-  (ns-alternate-modifier 'none)
-  (ns-command-modifier 'meta)
   (line-spacing 3)
   (cursor-type 'bar)
   (scroll-bar-mode nil)
   :config
+  (global-set-key (kbd "M-`")
+                  (if *is-a-mac* #'ns-next-frame #'other-frame))
   (when *is-a-mac*
+    (setq ns-alternate-modifier 'none
+          ns-command-modifier 'meta)
     ;; Due to eldoc/ emoji line-height issues, thanks https://www.reddit.com/r/emacs/comments/1lbo5jy/comment/noely1y/
     (set-fontset-font "fontset-default" 'emoji "Noto Color Emoji")
     ;; (add-to-list 'default-frame-alist '(alpha . 96))
@@ -60,8 +62,6 @@
                           :height (if (equal (face-attribute 'default :height) small)
                                       large
                                     small))))
-  :bind
-  ("M-`" . ns-next-frame)
   :custom-face
   (mode-line ((t (:weight light :background "grey90" :box nil))))
   (mode-line-inactive ((t (:weight light :background "grey95" :box nil))))
@@ -78,10 +78,10 @@
   (load-theme 'ef-arbutus t))
 
 (use-package ns-auto-titlebar
+  :if *is-a-mac*
   :demand t
   :config
-  (when *is-a-mac*
-    (ns-auto-titlebar-mode)))
+  (ns-auto-titlebar-mode))
 
 (use-package minibuffer
   :custom
@@ -611,6 +611,10 @@ first occurance (not ARGth occurance)."
   (minions-mode))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+;; (setq x-ctrl-keysym 'ctrl
+;;       x-super-keysym 'meta
+;;       x-meta-keysym 'super)
 
 (custom-set-variables
  '(use-package-enable-imenu-support t)

@@ -1,12 +1,17 @@
-{ pkgs, ... }:
-
 {
-  # Add shared modules and plugin configuration from ../../home-manager here.
-  imports = [ ];
+  imports = [
+    ../../home-manager/emacs.nix
+    ../../home-manager/fonts.nix
+    ../../home-manager/git.nix
+  ];
 
   home.username = "gamble";
   home.homeDirectory = "/home/gamble";
   home.stateVersion = "26.05";
 
-  home.packages = [ pkgs.git ];
+  programs.fish.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 }

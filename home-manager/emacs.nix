@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  emacsBase = if isDarwin then pkgs.emacs-unstable else pkgs.emacs-unstable-pgtk;
   emacsPkg = config.programs.emacs.finalPackage;
   emacsclient-app = pkgs.callPackage ../packages/emacsclient-app.nix {
     emacs = emacsPkg;
@@ -8,20 +10,24 @@ let
   };
 in
 {
-  home.file."Applications/Emacs Client.app".source = emacsclient-app;
+  home.file."Applications/Emacs Client.app" = lib.mkIf isDarwin {
+    source = emacsclient-app;
+  };
 
   # Launch the daemon from inside Emacs.app rather than bin/emacs, so its
   # NSBundle resolves to the app and GUI frames get the real Emacs icon
   # instead of the generic one. Home Manager wraps these args in a
   # wait4path guard itself, so pass them plain like the upstream module.
-  launchd.agents.emacs.config.ProgramArguments = lib.mkForce [
-    "${config.home.homeDirectory}/.nix-profile/Applications/Emacs.app/Contents/MacOS/Emacs"
-    "--fg-daemon"
-  ];
+  launchd.agents.emacs = lib.mkIf isDarwin {
+    config.ProgramArguments = lib.mkForce [
+      "${config.home.homeDirectory}/.nix-profile/Applications/Emacs.app/Contents/MacOS/Emacs"
+      "--fg-daemon"
+    ];
+  };
 
   programs.emacs = {
     enable = true;
-    package = (pkgs.emacsPackagesFor pkgs.emacs-unstable).emacsWithPackages (
+    package = (pkgs.emacsPackagesFor emacsBase).emacsWithPackages (
       epkgs: with epkgs; [
         (epkgs.trivialBuild {
           pname = "eglot-hierarchy";
@@ -37,10 +43,12 @@ in
         agent-shell
         browse-kill-ring
         cape
+        cider
         clojure-mode
         consult
         corfu
         ef-themes
+        eat
         embark-consult
         envrc
         exec-path-from-shell
@@ -52,6 +60,7 @@ in
         ibuffer-project
         j-mode
         jarchive
+        jtsx
         justl
         ledger-mode
         magit
@@ -62,7 +71,6 @@ in
         move-dup
         nim-mode
         nix-ts-mode
-        ns-auto-titlebar
         ocaml-ts-mode
         orderless
         org-roam
@@ -91,7 +99,7 @@ in
             tree-sitter-javascript
           ]
         ))
-      ]
+      ] ++ lib.optionals isDarwin [ epkgs.ns-auto-titlebar ]
     );
     extraConfig = builtins.readFile ../config.el;
   };

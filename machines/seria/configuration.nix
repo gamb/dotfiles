@@ -113,6 +113,7 @@
     isNormalUser = true;
     description = "Adam Gamble";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
   };
 
   home-manager = {
@@ -120,6 +121,8 @@
     useUserPackages = true;
     users.gamble = import ./home.nix;
   };
+
+  programs.fish.enable = true;
 
   programs.coolercontrol.enable = true;
 

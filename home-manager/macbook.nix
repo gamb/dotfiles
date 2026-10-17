@@ -5,6 +5,7 @@
     ./claude.nix
     ./emacs.nix
     ./fonts.nix
+    ./git.nix
   ];
 
   home.username = "adamgamble";
@@ -48,18 +49,6 @@
     functions.fish_prompt = ''
       echo -n "% "
     '';
-  };
-
-  programs.git = {
-    enable = true;
-    ignores = [ ".direnv/" ];
-    settings = {
-      user = {
-        name = "Adam Gamble";
-        email = "adam.gamble@hey.com";
-      };
-      init.defaultBranch = "main";
-    };
   };
 
   programs.direnv = {
