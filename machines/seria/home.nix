@@ -9,6 +9,10 @@
   home.homeDirectory = "/home/gamble";
   home.stateVersion = "26.05";
 
+  home.packages = [
+    pkgs.llm-agents.codex
+    pkgs.llm-agents.codex-acp
+  ];
   programs.fish.enable = true;
   programs.direnv = {
     enable = true;

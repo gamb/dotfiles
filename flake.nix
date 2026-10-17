@@ -38,7 +38,12 @@
         modules = [
           ./machines/seria/configuration.nix
           home-manager.nixosModules.home-manager
-          { nixpkgs.overlays = [ emacs-overlay.overlays.default ]; }
+          {
+            nixpkgs.overlays = [
+              emacs-overlay.overlays.default
+              (_final: _prev: { llm-agents = llm-agents.packages.x86_64-linux; })
+            ];
+          }
         ];
       };
 
