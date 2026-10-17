@@ -14,3 +14,6 @@ update-lock:
 
 expire:
   home-manager expire-generations "-30 days"
+
+seria-rebuild:
+  sudo nixos-rebuild switch --flake path:.#seria

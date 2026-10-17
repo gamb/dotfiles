@@ -42,12 +42,20 @@
         ];
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        packages = [
-          pkgs.just
-          home-manager.packages.${system}.home-manager
-        ];
-      };
+      devShells = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-linux" ] (
+        shellSystem:
+        let
+          shellPkgs = nixpkgs.legacyPackages.${shellSystem};
+        in
+        {
+          default = shellPkgs.mkShell {
+            packages = [
+              shellPkgs.just
+              home-manager.packages.${shellSystem}.home-manager
+            ];
+          };
+        }
+      );
 
       homeConfigurations."macbook" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
