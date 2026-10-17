@@ -124,6 +124,12 @@
 
   programs.fish.enable = true;
 
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "gamble" ];
+  };
+
   programs.coolercontrol.enable = true;
 
   programs.steam = {
