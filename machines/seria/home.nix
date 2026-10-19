@@ -39,7 +39,7 @@ in
   dconf.settings = {
     "org/gnome/mutter".overlay-key = "";
     "org/gnome/shell/keybindings" = {
-      toggle-application-view = noShortcuts;
+      toggle-application-view = [ "F8" ];
       toggle-message-tray = noShortcuts;
       toggle-quick-settings = noShortcuts;
     };
