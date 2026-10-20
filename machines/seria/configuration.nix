@@ -105,6 +105,15 @@
     # jack.enable = true;
   };
 
+  # CVE-2026-111943: retain the explicit blacklist alongside upstream defaults.
+  # https://github.com/NixOS/nixpkgs/issues/576485
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+    "emSign Root CA - C1"
+    "emSign ECC Root CA - C3"
+  ];
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 

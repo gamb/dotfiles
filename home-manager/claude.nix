@@ -15,6 +15,10 @@ let
   };
 in
 {
+  # Do not supplement the OS trust store with stale bundled roots.
+  # https://github.com/NixOS/nixpkgs/pull/576509
+  home.sessionVariables.CLAUDE_CODE_CERT_STORE = "system";
+
   # The instructions are inlined rather than kept in a repo-root CLAUDE.md, so
   # Claude Code does not also read them as project instructions for this repo.
   home.file = {
