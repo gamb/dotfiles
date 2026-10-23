@@ -114,6 +114,19 @@
     "emSign ECC Root CA - C3"
   ];
 
+  security.pam.u2f = {
+    enable = true;
+    control = "sufficient";
+    settings = {
+      authfile = "/etc/u2f-mappings";
+      origin = "pam://seria";
+      cue = true;
+      userpresence = 1;
+      userverification = 1;
+      pinverification = 0;
+    };
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
@@ -177,6 +190,10 @@
     pciutils
     glmark2
     keyd
+    yubikey-manager
+    yubioath-flutter
+    pam_u2f
+    libfido2
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
