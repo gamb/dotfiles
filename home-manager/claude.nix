@@ -1,19 +1,5 @@
-{ lib, pkgs, mattpocock-skills, ... }:
+{ lib, mattpocock-skills, ... }:
 
-let
-  alerter = pkgs.callPackage ../packages/alerter.nix { };
-
-  # Registered in ~/.claude/settings.json as a PermissionRequest hook. That file
-  # stays out of home-manager because Claude Code writes to it itself.
-  permission-notify = pkgs.writeShellApplication {
-    name = "permission-notify";
-    runtimeInputs = [
-      alerter
-      pkgs.jq
-    ];
-    text = builtins.readFile ./claude-permission-notify.sh;
-  };
-in
 {
   # Do not supplement the OS trust store with stale bundled roots.
   # https://github.com/NixOS/nixpkgs/pull/576509
@@ -25,7 +11,6 @@ in
     "CLAUDE.md".text = ''
       Write all responses in ASD-STE100 Simplified Technical English.
     '';
-    ".claude/hooks/permission-notify".source = "${permission-notify}/bin/permission-notify";
   }
   // lib.listToAttrs (
     map (p: {
